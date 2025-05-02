@@ -3,55 +3,70 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@700&display=swap" rel="stylesheet">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap" rel="stylesheet">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-
-  <link href="https://fonts.cdnfonts.com/css/fiesta" rel="stylesheet">
-
-  <link href="https://fonts.cdnfonts.com/css/the-fontfuny" rel="stylesheet">
-
-  <link href="https://fonts.cdnfonts.com/css/shredded" rel="stylesheet">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"> -->
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@900&display=swap" rel="stylesheet">
-
-  <title>Спіральна Анімація</title>
+  <title>AddVision.dev</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background: url('https://picsum.photos/id/1015/1200/800') center/cover no-repeat;
+      background: black;
+      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      position: relative;
+      transition: background 1s ease;
     }
+
+    body.light {
+      background: white;
+      color: black;
+      transition: background 1s ease;
+    }
+
+    body.light rect[mask] {
+      fill: white;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      width: 0;
+      height: 0;
+      padding: 0;
+      border-radius: 50%;
+      border: 3.5vmin solid;
+      border-color: white white black black;
+      outline: 2px solid #ffffff80;
+      cursor: pointer;
+      z-index: 10;
+      transition: outline-color 0.5s ease, border-color 0.5s ease;
+    }
+
+    body.light .theme-toggle {
+      border-color: black black white white;
+      outline-color: #00000080;
+    }
+
+    .bg-layer {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 1.5s ease-in-out;
+      z-index: -1;
+    }
+
+    #bg1 { opacity: 1; }
+    #bg2 { opacity: 0; }
 
     svg {
       width: 100vw;
@@ -64,66 +79,42 @@
       transform-origin: center;
     }
 
-    #visionText,
-    #addText {
-
-      /*
-      font-family: "Manjari", sans-serif;
-      font-weight: 700;
-      font-style: normal;
-
-      font-family: "Chewy", system-ui;
-      font-weight: 400;
-      font-style: normal;
-
-      font-family: "Syne Mono", monospace;
-      font-weight: 400;
-      font-style: normal;
-
-      font-family: "Space Grotesk", sans-serif;
-      font-optical-sizing: auto;
-      font-weight: 700;
-      font-style: normal;
-
-      font-family: "Oswald", sans-serif;
-      font-optical-sizing: auto;
-      font-weight: 700;
-      font-style: normal;
-
-
-      font-family: "Ubuntu", sans-serif;
-      font-weight: 700;
-      font-style: normal;
-
-      font-family: 'Fiesta', sans-serif;
-                                                    
-      font-family: 'The Fontfuny', sans-serif;
-                                                    
-
-      font-family: 'Shredded', sans-serif;
-                                                    
-
-      font-family: "Anton", sans-serif;
-      font-weight: 400;
-      font-style: normal;
-
-      */
-
+    text {
       font-family: "Outfit", sans-serif;
       font-optical-sizing: auto;
       font-weight: 900;
       font-style: normal;
-
     }
-    #visionText{
+
+    #visionText {
       font-size: 9vmin;
     }
+
     #addText {
       font-size: 11vmin;
+    }
+
+    #clockText {
+      font-size: 5vmin;
+      font-weight: 600;
+    }
+
+    #copyrightText {
+      font-size: 3.5vmin;
+      color: currentColor;
+      width: 100%;
+      text-align: center;
+      padding-bottom: 25px;
+      font-weight: 100;
     }
   </style>
 </head>
 <body>
+
+<button class="theme-toggle" id="themeToggle"></button>
+
+<div id="bg1" class="bg-layer"></div>
+<div id="bg2" class="bg-layer"></div>
 
 <svg xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -139,11 +130,20 @@
 
       <text id="visionText" x="0" y="0" fill="black" text-anchor="middle">VISION</text>
       <text id="addText" x="0" y="0" fill="black" text-anchor="middle">ADD</text>
+
+      <text id="clockText" x="25" y="65" fill="black">0000-00-00 00:00:00</text>
     </mask>
   </defs>
 
   <rect fill="black" mask="url(#inverted-mask)" width="100%" height="100%" />
 </svg>
+
+<text
+id="copyrightText"
+fill="black"
+text-anchor="middle"
+style="position: absolute; bottom: 0; left: 0%"
+>© 2013–2025 AddVision.dev</text>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
@@ -179,15 +179,16 @@
     });
   }
 
-  function animateGroup() {
-    gsap.killTweensOf([group]);
+  function animateGroup(onRepeatCallback) {
+    gsap.killTweensOf(group);
 
     gsap.to(group, {
       duration: 10,
       repeat: -1,
       yoyo: true,
       ease: "power1.inOut",
-      rotation: 720
+      rotation: 720,
+      onRepeat: onRepeatCallback
     });
   }
 
@@ -224,8 +225,6 @@
 
     const spacing = -40;
 
-
-    // Враховуємо offset (тобто переміщення групи логотипа)
     const logoLeft = logoBox.x + groupOffset.x;
     const logoRight = logoBox.x + logoBox.width + groupOffset.x;
     const logoTop = logoBox.y + groupOffset.y;
@@ -237,11 +236,11 @@
     };
 
     const addTarget = {
-      x: logoLeft - addBox.width / 2 - spacing,
+      x: logoLeft - addBox.width / 2 - spacing * 1.1,
       y: logoBottom + addBox.height * 0
     };
 
-    const duration= 10;
+    const duration = 10;
     const turns = Math.PI * 2;
     const startRadius = 1000;
     const endRadius = -logoBox.height * 0.5;
@@ -272,17 +271,90 @@
     });
   }
 
+  function updateClock() {
+    const now = new Date();
+    const pad = (n) => String(n).padStart(2, '0');
+    const clockStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    document.getElementById("clockText").textContent = clockStr;
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  function updateCopyright() {
+    const year = new Date().getFullYear();
+    document.getElementById("copyrightText").textContent = `© 2013-${year} AddVision.dev`;
+  }
+
+const backgrounds = [
+  'https://picsum.photos/id/1015/1200/800',
+  'https://picsum.photos/seed/apr/800',
+  'https://picsum.photos/seed/may/800',
+  'https://picsum.photos/seed/jun/800',
+  'https://picsum.photos/seed/jul/800',
+  'https://picsum.photos/seed/aug/800',
+  'https://picsum.photos/seed/sep/800',
+  'https://picsum.photos/seed/oct/800',
+  'https://picsum.photos/seed/nov/800',
+  'https://picsum.photos/seed/dec/800',
+  'https://picsum.photos/seed/jan/800',
+  'https://picsum.photos/seed/feb/800',
+  'https://picsum.photos/seed/mar/800',
+];
+let bgIndex = 0;
+let currentLayer = 1;
+
+const bg1 = document.getElementById("bg1");
+const bg2 = document.getElementById("bg2");
+
+bg1.style.backgroundImage = `url(${backgrounds[bgIndex]})`;
+
+function nextBackground() {
+  const nextIndex = (bgIndex + 1) % backgrounds.length;
+  const nextUrl = `url(${backgrounds[nextIndex]})`;
+
+  const topLayer = currentLayer === 1 ? bg2 : bg1;
+  const bottomLayer = currentLayer === 1 ? bg1 : bg2;
+
+  topLayer.style.backgroundImage = nextUrl;
+  topLayer.style.opacity = 1;
+  bottomLayer.style.opacity = 0;
+
+  currentLayer = currentLayer === 1 ? 2 : 1;
+  bgIndex = nextIndex;
+}
+
+
   window.addEventListener("load", () => {
     centerGroup();
-    animateGroup();
+    animateGroup(nextBackground);
     animateTextSpiral();
+    updateCopyright();
   });
 
   window.addEventListener("resize", () => {
     centerGroup();
-    animateGroup();
     animateTextSpiral();
   });
+
+  function applyTheme(theme) {
+  document.body.classList.toggle('light', theme === 'light');
+  localStorage.setItem('theme', theme);
+}
+
+document.getElementById("themeToggle").addEventListener("click", () => {
+  const current = document.body.classList.contains('light') ? 'light' : 'dark';
+  const next = current === 'light' ? 'dark' : 'light';
+  applyTheme(next);
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') {
+    applyTheme('light');
+  }
+});
+
 </script>
 
 </body>

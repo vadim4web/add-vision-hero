@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manjari:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne+Mono&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.cdnfonts.com/css/fiesta" rel="stylesheet">
+
+  <link href="https://fonts.cdnfonts.com/css/the-fontfuny" rel="stylesheet">
+
+  <link href="https://fonts.cdnfonts.com/css/shredded" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@900&display=swap" rel="stylesheet">
+
+  <title>Спіральна Анімація</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: url('https://picsum.photos/id/1015/1200/800') center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    svg {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    #movingGroup {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    #visionText,
+    #addText {
+
+      /*
+      font-family: "Manjari", sans-serif;
+      font-weight: 700;
+      font-style: normal;
+
+      font-family: "Chewy", system-ui;
+      font-weight: 400;
+      font-style: normal;
+
+      font-family: "Syne Mono", monospace;
+      font-weight: 400;
+      font-style: normal;
+
+      font-family: "Space Grotesk", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 700;
+      font-style: normal;
+
+      font-family: "Oswald", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 700;
+      font-style: normal;
+
+
+      font-family: "Ubuntu", sans-serif;
+      font-weight: 700;
+      font-style: normal;
+
+      font-family: 'Fiesta', sans-serif;
+                                                    
+      font-family: 'The Fontfuny', sans-serif;
+                                                    
+
+      font-family: 'Shredded', sans-serif;
+                                                    
+
+      font-family: "Anton", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+
+      */
+
+      font-family: "Outfit", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 900;
+      font-style: normal;
+
+    }
+    #visionText{
+      font-size: 9vmin;
+    }
+    #addText {
+      font-size: 11vmin;
+    }
+  </style>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <mask id="inverted-mask">
+      <rect fill="white" width="100%" height="100%" />
+      <g id="movingGroup" fill="none" stroke="black" stroke-width="28">
+        <line x1="200" y1="386" x2="200" y2="14" />
+        <line x1="200" y1="14" x2="14" y2="200" />
+        <line x1="14" y1="200" x2="200" y2="200" />
+        <path d="M 200,14 A 93, 93 0 1 1 200,200" />
+        <circle cx="200" cy="200" r="200" />
+      </g>
+
+      <text id="visionText" x="0" y="0" fill="black" text-anchor="middle">VISION</text>
+      <text id="addText" x="0" y="0" fill="black" text-anchor="middle">ADD</text>
+    </mask>
+  </defs>
+
+  <rect fill="black" mask="url(#inverted-mask)" width="100%" height="100%" />
+</svg>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+
+<script>
+  gsap.registerPlugin(MotionPathPlugin);
+
+  const group = document.querySelector("#movingGroup");
+  let groupOffset = { x: 0, y: 0 };
+
+  function getGroupCenter() {
+    const bbox = group.getBBox();
+    return {
+      x: bbox.x + bbox.width / 2,
+      y: bbox.y + bbox.height / 2
+    };
+  }
+
+  function centerGroup() {
+    const { x: groupCenterX, y: groupCenterY } = getGroupCenter();
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    const offsetX = viewportWidth / 2 - groupCenterX;
+    const offsetY = viewportHeight / 2 - groupCenterY;
+
+    groupOffset = { x: offsetX, y: offsetY };
+
+    gsap.set(group, {
+      x: offsetX,
+      y: offsetY,
+      transformOrigin: `${groupCenterX}px ${groupCenterY}px`
+    });
+  }
+
+  function animateGroup() {
+    gsap.killTweensOf([group]);
+
+    gsap.to(group, {
+      duration: 10,
+      repeat: -1,
+      yoyo: true,
+      ease: "power1.inOut",
+      rotation: 720
+    });
+  }
+
+  function generateSpiralPath(centerX, centerY, startRadius, endRadius, turns, endX, endY) {
+    const points = [];
+    const steps = 100;
+
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const angle = t * turns * 2 * Math.PI;
+      const radius = startRadius * (1 - t) + endRadius * t;
+      const x = centerX + Math.cos(angle) * radius;
+      const y = centerY + Math.sin(angle) * radius;
+      points.push({ x, y });
+    }
+
+    points.push({ x: endX, y: endY });
+    return points;
+  }
+
+  function animateTextSpiral() {
+    const vision = document.querySelector("#visionText");
+    const add = document.querySelector("#addText");
+
+    gsap.killTweensOf([vision, add]);
+
+    const rawCenter = getGroupCenter();
+    const centerX = rawCenter.x + groupOffset.x;
+    const centerY = rawCenter.y + groupOffset.y;
+
+    const visionBox = vision.getBBox();
+    const addBox = add.getBBox();
+    const logoBox = group.getBBox();
+
+    const spacing = -40;
+
+
+    // Враховуємо offset (тобто переміщення групи логотипа)
+    const logoLeft = logoBox.x + groupOffset.x;
+    const logoRight = logoBox.x + logoBox.width + groupOffset.x;
+    const logoTop = logoBox.y + groupOffset.y;
+    const logoBottom = logoBox.y + logoBox.height + groupOffset.y;
+
+    const visionTarget = {
+      x: logoRight + visionBox.width / 2 + spacing * 1.66,
+      y: logoTop + visionBox.height * 0.5
+    };
+
+    const addTarget = {
+      x: logoLeft - addBox.width / 2 - spacing,
+      y: logoBottom + addBox.height * 0
+    };
+
+    const duration= 10;
+    const turns = Math.PI * 2;
+    const startRadius = 1000;
+    const endRadius = -logoBox.height * 0.5;
+
+    gsap.set(vision, { x: 2000, y: 2000 });
+    gsap.set(add, { x: -1000, y: -1000 });
+
+    gsap.to(vision, {
+      duration,
+      ease: "power2.inOut",
+      yoyo: true,
+      repeat: -1,
+      motionPath: {
+        path: generateSpiralPath(centerX, centerY, startRadius, endRadius, turns, visionTarget.x, visionTarget.y),
+        autoRotate: false
+      }
+    });
+
+    gsap.to(add, {
+      duration,
+      ease: "power2.inOut",
+      yoyo: true,
+      repeat: -1,
+      motionPath: {
+        path: generateSpiralPath(centerX, centerY, startRadius, endRadius, turns, addTarget.x, addTarget.y),
+        autoRotate: false
+      }
+    });
+  }
+
+  window.addEventListener("load", () => {
+    centerGroup();
+    animateGroup();
+    animateTextSpiral();
+  });
+
+  window.addEventListener("resize", () => {
+    centerGroup();
+    animateGroup();
+    animateTextSpiral();
+  });
+</script>
+
+</body>
+</html>
